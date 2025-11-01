@@ -1,19 +1,14 @@
-name: One-Time Scheduled Workflow
+name: Run Manually or Scheduled
 
 on:
+  workflow_dispatch:  # 👈 allows manual trigger
   schedule:
-    - cron: '40 16 * * *'  # 4:20 PM UTC
+    - cron: '*/5 * * * *'  # (optional) runs every 5 minutes
 
 jobs:
-  run-once:
+  run-task:
     runs-on: ubuntu-latest
     steps:
-      - name: Run only on today's date
-        run: |
-          TODAY=$(date -u +%F)
-          if [ "$TODAY" = "2025-11-01" ]; then
-            echo "Running one-time task for $TODAY"
-            # Put your task here
-          else
-            echo "Skipping, date is $TODAY"
-          fi
+      - name: Run your job
+        run: echo "Running workflow at $(date -u)"
+
