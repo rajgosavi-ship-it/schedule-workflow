@@ -1,13 +1,19 @@
-name: Daily Scheduled Workflow
+name: One-Time Scheduled Workflow
 
 on:
   schedule:
-    - cron: '35 16 * * *'
+    - cron: '40 16 * * *'  # 4:20 PM UTC
 
 jobs:
-  run-script:
+  run-once:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Print current time
-        run: echo "Running the scheduled workflow at $(date)"
+      - name: Run only on today's date
+        run: |
+          TODAY=$(date -u +%F)
+          if [ "$TODAY" = "2025-11-01" ]; then
+            echo "Running one-time task for $TODAY"
+            # Put your task here
+          else
+            echo "Skipping, date is $TODAY"
+          fi
